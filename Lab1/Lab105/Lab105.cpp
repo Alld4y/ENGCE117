@@ -6,11 +6,13 @@ int main() {
     int *data;
     int m, n;
 
+    // read matrix size and values
     GetMatrix((int*)&data, &m, &n);
 
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("%d ", data[i * n + j]);
+    // print matrix
+    for (int rowIndex = 0; rowIndex < m; rowIndex++) {
+        for (int colIndex = 0; colIndex < n; colIndex++) {
+            printf("%d ", data[rowIndex * n + colIndex]);
         }
         printf("\n");
     }
@@ -22,44 +24,14 @@ int main() {
 void GetMatrix (int value[], int *row, int *col) {
     int **ptr = (int**)value; 
 
-    scanf("%d %d", row, col);
+    scanf("%d %d", row, col);  // read number of rows and columns
 
-    *ptr = new int[*row * *col];
+    *ptr = new int[*row * *col];  // allocate array
 
-    for (int i = 0; i < *row; i++) {
-        for (int j = 0; j < *col; j++) {
-            scanf("%d", &((*ptr)[i * *col + j]));
+    // read each element
+    for (int rowIndex = 0; rowIndex < *row; rowIndex++) {
+        for (int colIndex = 0; colIndex < *col; colIndex++) {
+            scanf("%d", &((*ptr)[rowIndex * *col + colIndex]));
         }
     }
 }
-
-// #include <stdio.h>
-
-// void GetMatrix (int **value, int *row, int *col);
-
-// int main () {
-//     int *data, m, n;
-//     GetMatrix(&data, &m, &n);
-    
-//     for(int i = 0 ; i < m ; i++){
-//         for(int j = 0 ; j < n ; j++){
-//             printf("%d ", data[i * n + j]);
-//         }
-//         printf("\n");
-//     }
-
-//     delete[] data;
-//     return 0;
-// }
-
-// void GetMatrix (int **value, int *row, int *col) {
-//     scanf("%d %d", row, col);
-//     *value = new int[*row * *col];
-//     for(int i = 0 ; i < *row ; i++){
-//         for(int j = 0 ; j < *col ; j++){
-//             scanf("%d",&((*value)[i * *col + j]));
-//         }
-//     }
-// }
-
-// void GetMatrix (int value[], int *row, int *col);
