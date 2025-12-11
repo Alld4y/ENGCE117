@@ -17,21 +17,21 @@ int main () {
 }
 
 void explode(char str1[], char splitter, char str[][10], int *count) {
-    int i = 0;  // index for str1
-    int j = 0;  // index for str
+    int indexStr1 = 0;  // index for str1
+    int indexStr = 0;  // index for str
 
     if(str1[0] != '\0')
         (*count) = 1; 
 
-    while(str1[i] != '\0') {  
-        if(str1[i] == splitter) {  // if splitter found
-            str[(*count)-1][j] = '\0';  // end current
+    while(str1[indexStr1] != '\0') {  
+        if(str1[indexStr1] == splitter) {  // if splitter found
+            str[(*count)-1][indexStr1] = '\0';  // end current
             (*count) += 1;
-            j = 0;
+            indexStr = 0;
         } else {
-            str[(*count)-1][j] = str1[i];  // copy character
-            j += 1;  // move to next position
+            str[(*count)-1][indexStr1] = str1[indexStr1];  // copy character
+            indexStr += 1;  // move to next position
         }
-        i += 1;  // move to next character in str1
+        indexStr1 += 1;  // move to next character in str1
     }
 }
