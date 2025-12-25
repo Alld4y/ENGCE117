@@ -1,41 +1,78 @@
 #include <stdio.h>
 
+#define MAX_ROOMS 20
+#define STUDENTS_PER_ROOM 10
+
 typedef struct {
     char name[20];
     int age;
     char sex;
     float gpa;
-} student;
+} Student;
 
-student (*GetStudent(int *room))[10];
+/* Read student data for a single room */
+void ReadRoomStudents(Student room[], int roomNumber);
 
-int main() {
-    student (*children)[10];
-    int group;
-    children = GetStudent(&group);
-    for(int i = 0 ; i < group ; i++) {
-        printf("----- Room %d -----\n", i+1);
-        for(int j = 0 ; j < 10 ; j++) {
-            printf("%s %d %c %.2f\n", children[i][j].name, children[i][j].age, children[i][j].sex, children[i][j].gpa);
-        }
-    }
+/* Get all student data and return pointer to rooms */
+Student (*GetStudent(int *totalRooms))[STUDENTS_PER_ROOM];
+
+/* Print all student data */
+void PrintStudents(Student (*students)[STUDENTS_PER_ROOM], int totalRooms);
+
+int main(void) {
+    int totalRooms = 0;
+    Student (*students)[STUDENTS_PER_ROOM];
+
+    students = GetStudent(&totalRooms);
+    PrintStudents(students, totalRooms);
+
     return 0;
 }
 
-student (*GetStudent(int *room))[10] {
-    static student children[20][10];  // static to persist after function returns
-    printf("Enter number of room: ");
-    if(scanf("%d", room) != 1) {
-        printf("Invalid input.\n");
+Student (*GetStudent(int *totalRooms))[STUDENTS_PER_ROOM] {
+    static Student students[MAX_ROOMS][STUDENTS_PER_ROOM];
+
+    printf("Enter number of rooms: ");
+    if (scanf("%d", totalRooms) != 1 || *totalRooms <= 0) {
+        printf("Invalid room count.\n");
+        return students;
     }
-    for(int i = 0 ; i < *room ; i++) {
-        printf("----- Room %d -----\n", i+1);
-        for(int j = 0 ; j < 10 ; j++) {
-            printf("Enter name, age, sex, gpa: ");
-            if(scanf("%s %d %c %f", children[i][j].name, &children[i][j].age, &children[i][j].sex, &children[i][j].gpa) != 4) {
-                printf("Invalid input.\n");
-            }
+
+    for (int roomIndex = 0; roomIndex < *totalRooms; roomIndex++) {
+        ReadRoomStudents(students[roomIndex], roomIndex + 1);
+    }
+
+    return students;
+}
+
+void ReadRoomStudents(Student room[], int roomNumber) {
+    printf("----- Room %d -----\n", roomNumber);
+
+    for (int studentIndex = 0; studentIndex < STUDENTS_PER_ROOM; studentIndex++) {
+        printf("Enter name age sex gpa: ");
+
+        if (scanf("%s %d %c %f",
+                room[studentIndex].name,
+                &room[studentIndex].age,
+                &room[studentIndex].sex,
+                &room[studentIndex].gpa) != 4) {
+
+            printf("Invalid student input.\n");
+            return;
         }
     }
-    return children;
+}
+
+void PrintStudents(Student (*students)[STUDENTS_PER_ROOM], int totalRooms) {
+    for (int roomIndex = 0; roomIndex < totalRooms; roomIndex++) {
+        printf("----- Room %d -----\n", roomIndex + 1);
+
+        for (int studentIndex = 0; studentIndex < STUDENTS_PER_ROOM; studentIndex++) {
+            printf("%s %d %c %.2f\n",
+                students[roomIndex][studentIndex].name,
+                students[roomIndex][studentIndex].age,
+                students[roomIndex][studentIndex].sex,
+                students[roomIndex][studentIndex].gpa);
+        }
+    }
 }
