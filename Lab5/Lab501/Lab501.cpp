@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
 struct studentNode {
     char name[20];
@@ -40,7 +39,7 @@ void ShowAll(struct studentNode *walk) {
 }
 
 struct studentNode *AddNode(struct studentNode **start, char n[], int a, char s, float g) {
-    struct studentNode *newNode = (struct studentNode *)malloc(sizeof(struct studentNode));
+    struct studentNode *newNode = new struct studentNode;
     strcpy(newNode->name, n);
     newNode->age = a;
     newNode->sex = s;
@@ -62,7 +61,7 @@ struct studentNode *AddNode(struct studentNode **start, char n[], int a, char s,
 void InsNode(struct studentNode *now, char n[], int a, char s, float g) {
     if (now == NULL) return;
     
-    struct studentNode *newNode = (struct studentNode *)malloc(sizeof(struct studentNode));
+    struct studentNode *newNode = new struct studentNode;
     strcpy(newNode->name, n);
     newNode->age = a;
     newNode->sex = s;
@@ -76,6 +75,6 @@ void DelNode(struct studentNode *now) {
     
     struct studentNode *temp = now->next;
     now->next = temp->next;
-    free(temp);
+    delete temp;
 }
 
