@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <iostream>
-using namespace std;
 
 struct studentNode {
     char name[20];
